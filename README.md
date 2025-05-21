@@ -11,12 +11,15 @@ A web application that generates Pokemon counter builds using AI. This tool help
 - One precise counter for each input Pokemon in the same order
 - Easy copy-to-clipboard functionality for importing into Pokemon Showdown
 
+---
+
 - Input
 ![image](https://github.com/user-attachments/assets/8dae87ef-28c3-49cb-b6f4-5b9beff0b084)
 
 - Output
 ![image](https://github.com/user-attachments/assets/674a628e-98ed-4425-975d-90081d199679)
 
+---
 
 ## Prerequisites
 
