@@ -1,9 +1,7 @@
 (ns pokecounter-ai.openai
   (:require [clj-http.client :as client]
-            [cheshire.core :as json]
-            [environ.core :refer [env]]))
+            [cheshire.core :as json]))
 
-(def ^:private openai-api-key (or (env :openai-api-key) (System/getenv "OPENAI_API_KEY")))
 (def ^:private openai-endpoint "https://api.openai.com/v1/chat/completions")
 
 (defn- count-pokemon-in-builds
@@ -23,27 +21,25 @@
          "\nExample format:\n\nScizor @ Heavy-Duty Boots\nAbility: Technician\nEVs: 252 Atk / 4 Def / 252 Spe\nJolly Nature\n- Bullet Punch\n- U-turn\n- Knock Off\n- Swords Dance")))
 
 (defn generate-counters [pokemon-builds generation format]
-  (if (nil? openai-api-key)
-    {:error "OpenAI API key not found in environment variables"}
-    (try
-      (let [prompt (build-prompt pokemon-builds generation format)
-            request-body {:model "gpt-3.5-turbo"
-                         :messages [{:role "system"
-                                    :content "You are a competitive Pokemon expert with deep knowledge of the metagame."}
-                                   {:role "user"
-                                    :content prompt}]
-                         :temperature 0.7
-                         :max_tokens 2000}
-            _ (println "Request body:" (json/generate-string request-body)) ;; Debug log
-            response (client/post openai-endpoint
-                      {:body (json/generate-string request-body)
-                       :headers {"Authorization" (str "Bearer " openai-api-key)
-                                 "Content-Type" "application/json"}
-                       :as :json})
-            _ (println "Response status:" (:status response)) ;; Debug log
-            result (get-in response [:body :choices 0 :message :content])]
-        {:success true :result result})
-      (catch Exception e
-        (println "Error:" (.getMessage e)) ;; Debug log
-        (println "Error details:" (ex-data e)) ;; Detalhes do erro
-        {:error (str "Error calling OpenAI API: " (.getMessage e))}))))
+  (let [api-key (System/getenv "OPENAI_API_KEY")]
+    (if (nil? api-key)
+      {:error "OPENAI_API_KEY environment variable not set. Please export it before running the application."}
+      (try
+        (let [prompt (build-prompt pokemon-builds generation format)
+              request-body {:model "gpt-3.5-turbo"
+                           :messages [{:role "system"
+                                      :content "You are a competitive Pokemon expert with deep knowledge of the metagame."}
+                                     {:role "user"
+                                      :content prompt}]
+                           :temperature 0.7
+                           :max_tokens 2000}
+              response (client/post openai-endpoint
+                        {:body (json/generate-string request-body)
+                         :headers {"Authorization" (str "Bearer " api-key)
+                                   "Content-Type" "application/json"}
+                         :as :json})
+              result (get-in response [:body :choices 0 :message :content])]
+          {:success true :result result})
+        (catch Exception e
+          (println "Error calling OpenAI API:" (.getMessage e))
+          {:error (str "Error calling OpenAI API: " (.getMessage e))})))))

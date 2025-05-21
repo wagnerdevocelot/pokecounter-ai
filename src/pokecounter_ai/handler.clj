@@ -4,13 +4,12 @@
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.json :refer [wrap-json-response wrap-json-body]]
             [pokecounter-ai.views :as views]
-            [pokecounter-ai.openai :as openai]
-            [environ.core :refer [env]]))
+            [pokecounter-ai.openai :as openai]))
 
 (defn init []
   (println "PokeCounterAI application starting...")
-  (when (nil? (or (env :openai-api-key) (System/getenv "OPENAI_API_KEY")))
-    (println "WARNING: OpenAI API key not found in .env file or environment variables. API calls will fail.")))
+  (when (nil? (System/getenv "OPENAI_API_KEY"))
+    (println "WARNING: OPENAI_API_KEY environment variable not set. API calls will fail.")))
 
 (defroutes app-routes
   (GET "/" [] (views/index-page))

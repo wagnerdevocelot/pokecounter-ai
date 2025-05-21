@@ -9,13 +9,10 @@
                  [clj-http "3.12.3"]
                  [cheshire "5.11.0"]
                  [org.clojure/data.json "2.4.0"]
-                 [ring/ring-json "0.5.1"]
-                 [environ "1.2.0"]]
-  :plugins [[lein-ring "0.12.5"]
-            [lein-environ "1.2.0"]]
+                 [ring/ring-json "0.5.1"]]
+  :plugins [[lein-ring "0.12.5"]]
   :ring {:handler pokecounter-ai.handler/app
          :init pokecounter-ai.handler/init}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [ring/ring-mock "0.3.2"]]
-         :env {:openai-api-key "your-key-here"}}})
+                        [ring/ring-mock "0.3.2"]]}})

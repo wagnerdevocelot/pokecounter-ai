@@ -22,12 +22,7 @@ You will need:
 ## Setup
 
 1. Clone this repository
-2. Set your OpenAI API key in the `.env` file:
-   ```
-   OPENAI_API_KEY=your-openai-api-key-here
-   ```
-
-   Alternatively, you can set it as an environment variable:
+2. Set your OpenAI API key as an environment variable:
    ```
    export OPENAI_API_KEY=your_openai_api_key_here
    ```
