@@ -14,8 +14,8 @@
 (defroutes app-routes
   (GET "/" [] (views/index-page))
 
-  (POST "/generate-counters" [pokemon-builds generation format]
-    (let [result (openai/generate-counters pokemon-builds generation format)]
+  (POST "/generate-counters" [pokemon-builds generation format llm-model]
+    (let [result (openai/generate-counters pokemon-builds generation format llm-model)]
       (if (:error result)
         (do
           (println "Error in handler:" (:error result))

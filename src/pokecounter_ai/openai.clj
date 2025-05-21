@@ -20,13 +20,16 @@
          "\nRespond ONLY with the Pokemon builds in Pokemon Showdown format, with no additional text or explanation."
          "\nExample format:\n\nScizor @ Heavy-Duty Boots\nAbility: Technician\nEVs: 252 Atk / 4 Def / 252 Spe\nJolly Nature\n- Bullet Punch\n- U-turn\n- Knock Off\n- Swords Dance")))
 
-(defn generate-counters [pokemon-builds generation format]
-  (let [api-key (System/getenv "OPENAI_API_KEY")]
+(defn generate-counters [pokemon-builds generation format llm-model]
+  (let [api-key (System/getenv "OPENAI_API_KEY")
+        selected-model (if (and llm-model (not (empty? llm-model)))
+                         llm-model
+                         "gpt-3.5-turbo")]
     (if (nil? api-key)
       {:error "OPENAI_API_KEY environment variable not set. Please export it before running the application."}
       (try
         (let [prompt (build-prompt pokemon-builds generation format)
-              request-body {:model "gpt-3.5-turbo"
+              request-body {:model selected-model
                            :messages [{:role "system"
                                       :content "You are a competitive Pokemon expert with deep knowledge of the metagame."}
                                      {:role "user"

@@ -8,6 +8,10 @@
 (def pokemon-formats
   ["OU" "Ubers" "UU" "RU" "NU" "PU" "LC" "Monotype" "National Dex"])
 
+(def llm-models
+  [["GPT-3.5-Turbo" "gpt-3.5-turbo"]
+   ["GPT-4" "gpt-4"]])
+
 (defn layout [title & content]
   (html5
    [:head
@@ -44,6 +48,13 @@
                (form/drop-down {:class "form-select"}
                               "format"
                               pokemon-formats)]]
+
+             [:div.row.mb-3
+              [:div.col-md-6
+               [:label.form-label {:for "llm-model"} "LLM Model"]
+               (form/drop-down {:class "form-select"}
+                               "llm-model"
+                               llm-models)]]
 
              [:button.btn.btn-primary.mb-4 {:type "submit"} "Generate Counters"]]
 
