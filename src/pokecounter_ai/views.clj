@@ -67,3 +67,15 @@
              "Copy to Clipboard"]
             [:div.mt-4
              [:a.btn.btn-primary {:href "/"} "Generate More Counters"]]]]))
+
+(defn error-page [input error-message]
+  (layout "PokeCounterAI - Error"
+          [:div.row
+           [:div.col-md-12
+            [:h2 "Your Input"]
+            [:pre.p-3.bg-light.rounded input]
+            [:div.alert.alert-danger
+             [:h4 "Error Generating Counters"]
+             [:p error-message]]
+            [:div.mt-4
+             [:a.btn.btn-primary {:href "/"} "Try Again"]]]]))

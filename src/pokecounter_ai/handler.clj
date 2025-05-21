@@ -18,8 +18,9 @@
   (POST "/generate-counters" [pokemon-builds generation format]
     (let [result (openai/generate-counters pokemon-builds generation format)]
       (if (:error result)
-        {:status 500
-         :body {:error (:error result)}}
+        (do
+          (println "Error in handler:" (:error result))
+          (views/error-page pokemon-builds (:error result)))
         (views/results-page pokemon-builds (:result result)))))
 
   (route/resources "/")

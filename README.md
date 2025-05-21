@@ -7,7 +7,8 @@ A web application that generates Pokemon counter builds using AI. This tool help
 - Input up to 6 Pokemon builds in Pokemon Showdown format
 - Select the Pokemon generation (Gen 1-9)
 - Choose the competitive format (OU, Ubers, UU, etc.)
-- Generate AI-powered counter recommendations
+- Generate AI-powered counter recommendations using web search for up-to-date information
+- One precise counter for each input Pokemon in the same order
 - Easy copy-to-clipboard functionality for importing into Pokemon Showdown
 
 ## Prerequisites
@@ -51,8 +52,9 @@ This will start the server on port 3000 and automatically open your browser to t
 5. View the AI-generated counter suggestions
 6. Use the "Copy to Clipboard" button to copy the results for use in Pokemon Showdown
 
-## Example Input
+## Example
 
+### Input
 ```
 Dondozo @ Leftovers
 Ability: Unaware
@@ -64,6 +66,20 @@ Impish Nature
 - Sleep Talk
 - Curse
 ```
+
+### Generated Counter (example)
+```
+Toxapex @ Black Sludge
+Ability: Regenerator
+EVs: 252 HP / 252 Def / 4 SpD
+Bold Nature
+- Scald
+- Toxic
+- Recover
+- Haze
+```
+
+You can input up to 6 Pokemon builds, and the system will generate exactly one counter for each. Each counter is specifically chosen to deal with the corresponding Pokemon's moves, ability, and typical strategy.
 
 ## References
 
